@@ -1,0 +1,266 @@
+### 안드로이드 앱 개발 강의 14주차 이론 정리 가이드
+
+안드로이드 앱 개발 강의 14주차에서는 코틀린의 다양한 스코프 함수(Scope Functions)와 코틀린 객체 개념 기초를 학습합니다. 이 문서는 학생들이 코틀린의 기초 개념을 이해하고, 스코프 함수를 효과적으로 사용할 수 있도록 도와줍니다. 특히 람다에 대한 기초 개념도 포함하여 쉽게 이해할 수 있도록 설명합니다.
+
+---
+
+### 코틀린 객체 개념 기초
+
+#### 1. 객체(Object)와 클래스(Class)
+
+**객체(Object):**
+- 객체는 데이터와 메서드의 묶음입니다.
+- 객체는 클래스의 인스턴스입니다.
+- 예시:
+  ```kotlin
+  class Person {
+      var name: String = ""
+      var age: Int = 0
+
+      fun introduce() {
+          println("Hi, I'm $name and I'm $age years old.")
+      }
+  }
+
+  val person = Person()
+  person.name = "John"
+  person.age = 30
+  person.introduce() // 출력: Hi, I'm John and I'm 30 years old.
+  ```
+
+**클래스(Class):**
+- 클래스는 객체를 정의하는 틀입니다.
+- 클래스는 속성(프로퍼티)과 메서드(함수)로 구성됩니다.
+- 예시:
+  ```kotlin
+  class Car(val make: String, val model: String, var year: Int) {
+      fun start() {
+          println("The car is starting.")
+      }
+  }
+
+  val car = Car("Toyota", "Corolla", 2020)
+  car.start() // 출력: The car is starting.
+  ```
+
+#### 2. 생성자(Constructor)
+
+**주 생성자:**
+- 클래스 헤더에 정의되며, 클래스를 인스턴스화할 때 호출됩니다.
+- 예시:
+  ```kotlin
+  class Book(val title: String, val author: String)
+  val book = Book("1984", "George Orwell")
+  ```
+
+**보조 생성자:**
+- `constructor` 키워드를 사용하여 정의됩니다.
+- 예시:
+  ```kotlin
+  class Animal {
+      var name: String
+      var age: Int
+
+      constructor(name: String, age: Int) {
+          this.name = name
+          this.age = age
+      }
+  }
+
+  val animal = Animal("Lion", 5)
+  ```
+
+#### 3. 프로퍼티(Property)
+
+**프로퍼티:**
+- 클래스의 데이터를 나타냅니다.
+- `var`(변경 가능) 또는 `val`(변경 불가)로 선언됩니다.
+- 예시:
+  ```kotlin
+  class Student {
+      var name: String = ""
+      val id: Int = 0
+  }
+
+  val student = Student()
+  student.name = "Alice"
+  ```
+
+#### 4. 메서드(Method)
+
+**메서드:**
+- 클래스의 기능을 나타냅니다.
+- 클래스 내에 정의된 함수입니다.
+- 예시:
+  ```kotlin
+  class Calculator {
+      fun add(a: Int, b: Int): Int {
+          return a + b
+      }
+  }
+
+  val calculator = Calculator()
+  val sum = calculator.add(5, 3) // 출력: 8
+  ```
+
+---
+
+### 코틀린의 다양한 Scope Functions
+
+스코프 함수는 객체 컨텍스트 내에서 코드 블록을 실행할 수 있는 함수입니다. 스코프 함수를 사용하면 코드가 더 간결하고 읽기 쉬워집니다. 코틀린의 주요 스코프 함수에는 `let`, `run`, `with`, `apply`, `also`가 있습니다. 각 함수의 동작과 사용 예시를 살펴보겠습니다.
+
+#### 1. `let`
+
+**`let` 함수:**
+- 객체를 인수로 받아 코드 블록을 실행합니다.
+- 코드 블록의 결과를 반환합니다.
+- 예시:
+  ```kotlin
+  val name: String? = "Alice"
+  name?.let {
+      println("The name is $it")
+  }
+  // 출력: The name is Alice
+  ```
+
+#### 2. `run`
+
+**`run` 함수:**
+- 객체 컨텍스트에서 코드 블록을 실행합니다.
+- 코드 블록의 결과를 반환합니다.
+- 예시:
+  ```kotlin
+  val greeting = "Hello"
+  val result = greeting.run {
+      println(this)
+      "Result"
+  }
+  println(result)
+  // 출력: Hello
+  // 출력: Result
+  ```
+
+#### 3. `with`
+
+**`with` 함수:**
+- 객체를 인수로 받아 코드 블록을 실행합니다.
+- 객체를 `this`로 참조합니다.
+- 코드 블록의 결과를 반환합니다.
+- 예시:
+  ```kotlin
+  val car = Car("Toyota", "Corolla", 2020)
+  val description = with(car) {
+      println(make)
+      println(model)
+      println(year)
+      "Car Description"
+  }
+  println(description)
+  // 출력: Toyota
+  // 출력: Corolla
+  // 출력: 2020
+  // 출력: Car Description
+  ```
+
+#### 4. `apply`
+
+**`apply` 함수:**
+- 객체 컨텍스트에서 코드 블록을 실행합니다.
+- 객체를 반환합니다.
+- 객체 초기화에 유용합니다.
+- 예시:
+  ```kotlin
+  val person = Person().apply {
+      name = "John"
+      age = 30
+  }
+  println(person.name)
+  println(person.age)
+  // 출력: John
+  // 출력: 30
+  ```
+
+#### 5. `also`
+
+**`also` 함수:**
+- 객체를 인수로 받아 코드 블록을 실행합니다.
+- 객체를 반환합니다.
+- 코드 블록 내에서 객체를 수정하지 않는 작업에 유용합니다.
+- 예시:
+  ```kotlin
+  val number = 1
+  number.also {
+      println("The number is $it")
+  }
+  // 출력: The number is 1
+  ```
+
+### 람다 함수
+
+**람다 함수:**
+- 익명 함수로, 함수형 프로그래밍에서 자주 사용됩니다.
+- 중괄호 `{}`로 정의됩니다.
+- 기본 문법:
+  ```kotlin
+  val sum = { a: Int, b: Int -> a + b }
+  println(sum(2, 3)) // 출력: 5
+  ```
+
+**람다와 스코프 함수 결합:**
+- 스코프 함수에서 람다를 사용하여 코드를 간결하게 작성할 수 있습니다.
+- 예시:
+  ```kotlin
+  val person = Person().apply {
+      name = "Jane"
+      age = 25
+  }.also {
+      println("Person created: ${it.name}, ${it.age}")
+  }
+  // 출력: Person created: Jane, 25
+  ```
+
+### 실습 예제: 스코프 함수와 객체 사용하기
+
+**목표:** 학생들이 객체와 스코프 함수를 사용하여 코드를 작성하고 이해할 수 있도록 합니다.
+
+**예시 코드:**
+```kotlin
+data class User(var name: String, var email: String, var age: Int)
+
+fun main() {
+    val user = User("Alice", "alice@example.com", 25)
+
+    // let 함수 사용
+    user.let {
+        println("User's name is ${it.name}")
+    }
+
+    // run 함수 사용
+    val userInfo = user.run {
+        "User's email is $email"
+    }
+    println(userInfo)
+
+    // with 함수 사용
+    val userDescription = with(user) {
+        "User's name is $name, email is $email, and age is $age"
+    }
+    println(userDescription)
+
+    // apply 함수 사용
+    user.apply {
+        name = "Bob"
+        email = "bob@example.com"
+    }
+    println("Updated user: $user")
+
+    // also 함수 사용
+    user.also {
+        it.age = 30
+        println("User's age is updated to ${it.age}")
+    }
+}
+```
+
+### 정리
+이 가이드는 코틀린의 객체 개념 기초와 스코프 함수에 대해 설명합니다. 스코프 함수를 사용하면 코드를 더 간결하고 읽기 쉽게 작성할 수 있습니다. 또한, 람다 함수에 대한 기본 개념을 이해하면 코틀린의 다양한 함수형 프로그래밍 기능을 효과적으로 활용할 수 있습니다. 각 주제별로 제시된 예시 코드를 복습하며 학습하세요.
