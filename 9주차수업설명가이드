@@ -1,0 +1,155 @@
+### 안드로이드 앱 개발 강의 9주차 설명 가이드
+
+안드로이드 앱 개발 강의 9주차에서는 다양한 프로젝트와 개념들을 배우게 됩니다. 이 가이드는 각 주제별로 핵심 개념과 실습 내용을 이해하기 쉽게 설명합니다.
+
+---
+
+#### 1. VOD 사칙연산 계산기 프로젝트
+**목표:** 사칙연산을 수행할 수 있는 계산기 앱을 개발합니다.
+
+**핵심 개념:**
+- **액티비티(Activity):** 앱 화면을 구성하는 기본 단위입니다.
+- **EditText:** 사용자로부터 숫자를 입력받는 필드입니다.
+- **TextView:** 계산 결과를 표시하는 필드입니다.
+- **Button:** 사용자가 클릭하여 계산을 수행하도록 하는 버튼입니다.
+
+**실습 내용:**
+1. **레이아웃 구성:** 
+    - XML 파일에서 EditText, TextView, Button을 배치합니다.
+    - 각 컴포넌트에 적절한 아이디를 부여합니다.
+
+2. **이벤트 처리:** 
+    - 버튼 클릭 시 EditText에서 입력값을 가져와 사칙연산을 수행하고, 결과를 TextView에 표시합니다.
+    - `setOnClickListener`를 사용하여 버튼 클릭 이벤트를 처리합니다.
+
+**주요 코드 예시:**
+```java
+Button addButton = findViewById(R.id.addButton);
+addButton.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        int num1 = Integer.parseInt(editText1.getText().toString());
+        int num2 = Integer.parseInt(editText2.getText().toString());
+        int result = num1 + num2;
+        resultTextView.setText(String.valueOf(result));
+    }
+});
+```
+
+---
+
+#### 2. VOD 컴파운드 버튼 이해하기
+**목표:** 컴파운드 버튼의 종류와 사용 방법을 익힙니다.
+
+**핵심 개념:**
+- **컴파운드 버튼:** 체크박스(CheckBox), 라디오 버튼(RadioButton), 토글 버튼(ToggleButton) 등 여러 상태를 가질 수 있는 버튼입니다.
+
+**실습 내용:**
+1. **컴파운드 버튼 추가:** 
+    - XML 파일에서 체크박스, 라디오 버튼, 토글 버튼을 정의합니다.
+
+2. **이벤트 처리:** 
+    - 컴파운드 버튼의 상태 변화에 따른 이벤트를 처리합니다.
+    - `setOnCheckedChangeListener`를 사용하여 체크박스와 라디오 버튼의 상태 변화를 감지합니다.
+
+**주요 코드 예시:**
+```java
+CheckBox checkBox = findViewById(R.id.checkBox);
+checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        if (isChecked) {
+            // 체크박스가 체크됨
+        } else {
+            // 체크박스가 체크 해제됨
+        }
+    }
+});
+```
+
+---
+
+#### 3. VOD 좋아하는 동물 이미지 보기 프로젝트
+**목표:** 사용자가 좋아하는 동물 이미지를 선택하고 표시하는 앱을 개발합니다.
+
+**핵심 개념:**
+- **ImageView:** 이미지를 표시하는 뷰입니다.
+- **Spinner:** 드롭다운 목록을 제공하여 사용자가 선택할 수 있게 합니다.
+- **리소스 관리:** drawable 디렉토리에 이미지를 추가하고 참조합니다.
+
+**실습 내용:**
+1. **레이아웃 구성:** 
+    - XML 파일에서 ImageView와 Spinner를 정의합니다.
+
+2. **이미지 로드:** 
+    - 사용자가 Spinner에서 항목을 선택하면 해당 이미지를 ImageView에 표시합니다.
+
+**주요 코드 예시:**
+```java
+Spinner animalSpinner = findViewById(R.id.animalSpinner);
+animalSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String selectedAnimal = parent.getItemAtPosition(position).toString();
+        if (selectedAnimal.equals("Cat")) {
+            imageView.setImageResource(R.drawable.cat);
+        } else if (selectedAnimal.equals("Dog")) {
+            imageView.setImageResource(R.drawable.dog);
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+    }
+});
+```
+
+---
+
+#### 4. 자원 이동
+**목표:** 안드로이드 앱에서 리소스의 개념과 관리 방법을 이해합니다.
+
+**핵심 개념:**
+- **리소스 디렉토리:** drawable, layout, values 등 다양한 리소스 파일을 관리하는 디렉토리 구조입니다.
+- **리소스 참조:** XML 또는 코드에서 리소스를 참조하여 사용하는 방법입니다.
+
+**실습 내용:**
+1. **리소스 파일 추가:** 
+    - 프로젝트의 res 디렉토리에 이미지 파일이나 XML 레이아웃 파일을 추가합니다.
+
+2. **리소스 사용:** 
+    - XML 파일에서 `@drawable/filename` 또는 `@string/resource_name` 형식으로 리소스를 참조합니다.
+    - Java/Kotlin 코드에서 `R.drawable.filename` 형식으로 리소스를 참조합니다.
+
+---
+
+#### 5. 파일 이미지 파일 공유
+**목표:** 안드로이드에서 파일 시스템을 사용하여 이미지 파일을 저장하고 공유하는 방법을 익힙니다.
+
+**핵심 개념:**
+- **내부 저장소와 외부 저장소:** 파일을 저장할 수 있는 두 가지 위치입니다.
+- **Intent:** 다른 앱과 데이터를 공유하기 위해 사용하는 컴포넌트입니다.
+
+**실습 내용:**
+1. **파일 저장:** 
+    - 내부 또는 외부 저장소에 이미지를 저장하는 코드를 작성합니다.
+
+2. **파일 공유:** 
+    - Intent를 사용하여 이미지를 다른 앱과 공유합니다.
+
+**주요 코드 예시:**
+```java
+File imagePath = new File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "shared_image.png");
+Uri contentUri = FileProvider.getUriForFile(context, "com.example.fileprovider", imagePath);
+
+Intent shareIntent = new Intent();
+shareIntent.setAction(Intent.ACTION_SEND);
+shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
+shareIntent.setType("image/png");
+startActivity(Intent.createChooser(shareIntent, "Share image using"));
+```
+
+---
+
+
+이 가이드를 통해 9주차 강의 내용을 효과적으로 이해하고 실습할 수 있습니다. 각 주제별로 제시된 핵심 개념과 실습 내용을 복습하며 학습하세요.
